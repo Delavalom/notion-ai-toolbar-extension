@@ -61,10 +61,41 @@ const generateCompletionAction = async (info) => {
   }
 };
 
-chrome.contextMenus.create({
-  id: "context-run",
-  title: "Generate headline",
-  contexts: ["selection"],
+chrome.runtime.onInstalled.addListener(async () => {
+  for (let [key, content] of Object.entries(generateOptions)) {
+    chrome.contextMenus.create({
+      id: key,
+      title: content,
+      type: "normal",
+      contexts: ["selection"],
+    });
+  }
 });
 
-chrome.contextMenus.onClicked.addListener(generateCompletionAction);
+const generateOptions = {
+  improveWriting: "Improve writing",
+  fixSpellingGrammar: "Fix spelling & grammar",
+  makeShorter: "Make shorter",
+  makeLonger: "Make longer",
+//   changeTone: [
+//     "professional",
+//     "casual",
+//     "straightfoward",
+//     "confident",
+//     "friendly",
+//   ],
+  simplifyLanguage: "Simplify language",
+  summarize: "Summarize",
+//   translate: ["English", "Spanish", "French", "Portuguese"],
+  explainThis: "Explain this",
+  findTodosOn: "Find todos on",
+  continueWriting: "Continue Writing",
+};
+
+chrome.contextMenus.onClicked.addListener((info) => {
+    const {selectionText, menuItemId, editable} = info
+    selectionText
+    chrome.scripting.executeScript({
+        code: `console.log(${selectionText}, ${menuItemId}, ${editable})`
+    })
+});
