@@ -1,0 +1,36 @@
+body {
+    min-width: 250px;
+    background-color: orange;
+}
+
+#key_needed {
+    width: 100%;
+}
+
+#key_entered {
+    width: 100%;
+    display: none;
+}
+
+button {
+    border: none;
+    width: 100px;
+    height: 50px;
+    border-radius: 9999px;
+    padding: 10px 20px;
+    color: white;
+    background-color: black;
+    margin: 0 auto;
+}
+
+input {
+    outline: none;
+    border: none;
+    width: 100px;
+    height: 50px;
+    border-radius: 9999px;
+    padding: 10px 20px;
+    color: white;
+    background-color: black;
+    margin: 0 auto;
+}
