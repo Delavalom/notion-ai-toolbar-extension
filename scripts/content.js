@@ -1,63 +1,34 @@
 const insert = (content) => {
-  const elements = document.getElementsByClassName("droid");
-
-  if (elements.length === 0) {
-    return;
-  }
-
-  const element = elements[0];
-
-  const pToRemove = element.childNodes[0];
-  pToRemove.remove();
-
-  return true;
+  const modal = document.createElement("dialog");
+  modal.setAttribute(
+    "style",
+    `
+      height:450px;
+      border: none;
+      top:150px;
+      border-radius:20px;
+      background-color:white;
+      position: fixed; box-shadow: 0px 12px 48px rgba(29, 5, 64, 0.32);
+      `
+  );
+  modal.innerHTML = `<iframe id="popup-content"; style="height:100%"></iframe>
+      <div style="position:absolute; top:0px; left:5px;">
+      <p>${content}</p>
+      <button style="padding: 8px 12px; font-size: 16px; border: none; border-radius: 20px;">x</button>
+      </div>`;
+  document.body.appendChild(modal);
+  const dialog = document.querySelector("dialog");
+  dialog.showModal();
+  const iframe = document.getElementById("popup-content");
+  iframe.src = chrome.extension.getURL("index.html");
+  iframe.frameBorder = 0;
+  dialog.querySelector("button").addEventListener("click", () => {
+    dialog.close();
+  });
 };
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.message === "inject") {
-    const { content } = request;
+chrome.runtime.onMessage.addListener((request) => {
+  const { content } = request;
 
-    //     const result = insert(content);
-
-    //     if (!result) {
-    //       sendResponse({ status: "failed" });
-    //     }
-  }
-  document.body.appendChild(`
-    <div
-    style="
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    background-color: rgb(255, 255, 255);
-    opacity: 0.5;
-    z-index: 2000;
-    height: 1083px;
-    width: 100%;
-    "
-    >
-    <iframe style="width: 100%; height: 100%"></iframe>
-    </div>
-    <div
-    style="
-    position: absolute;
-    width: 350px;
-    border: 1px solid rgb(51, 102, 153);
-    padding: 10px;
-    background-color: rgb(255, 255, 255);
-    z-index: 2001;
-    overflow: auto;
-    text-align: center;
-    top: 149px;
-    left: 497px;
-    "
-    >
-    <div>
-    <div style="text-align: center">
-    <span><strong>Processing... Please Wait.</strong></span>
-    </div>
-    </div>
-    </div>
-    `);
-  
+  insert(content);
 });

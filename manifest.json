@@ -10,14 +10,13 @@
     "144": "assets/144.png"
   },
   "action": {
-    "default_popup": "src/index.html",
-    "default_title": "AI editor assitant",
-    "ai_popup": "modal.html"
+    "default_popup": "index.html",
+    "default_title": "AI editor assitant"
   },
   "background": {
     "service_worker": "scripts/contextMenuServiceWorker.js"
   },
-  "permissions": ["contextMenus", "activeTab", "storage", "scripting"],
+  "permissions": ["contextMenus", "storage", "tabs"],
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
