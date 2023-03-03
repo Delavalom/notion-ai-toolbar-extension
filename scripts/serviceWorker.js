@@ -60,14 +60,14 @@ const generateCompletionAction = async (info, tab) => {
       `${generateOptions[menuItemId]} the following text: \n ${selectionText}`
     );
 
-    sendMessage(baseCompletion.message.content, tab.id);
+    sendMessage(tab.id, baseCompletion.message.content, generateOptions[menuItemId]);
   } catch (error) {
-    sendMessage(error.toString(), tab.id);
+    sendMessage(tab.id, error.toString(), generateOptions[menuItemId]);
   }
 };
 
-const sendMessage = (content, activeTab) => {
-  chrome.tabs.sendMessage(activeTab, { content });
+const sendMessage = (activeTab, content, title) => {
+  chrome.tabs.sendMessage(activeTab, { content, title });
 };
 
 chrome.contextMenus.onClicked.addListener(generateCompletionAction);
