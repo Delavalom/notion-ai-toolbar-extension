@@ -14,12 +14,12 @@
     "default_title": "AI editor assitant"
   },
   "background": {
-    "service_worker": "scripts/contextMenuServiceWorker.js"
+    "service_worker": "scripts/serviceWorker.js"
   },
   "permissions": ["contextMenus", "storage", "tabs"],
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
+      "matches": ["<all_urls>"],
       "js": ["scripts/content.js"]
     }
   ]

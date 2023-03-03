@@ -52,26 +52,22 @@ const generate = async (prompt) => {
   return completion.choices.pop();
 };
 
-const generateCompletionAction = async (info) => {
+const generateCompletionAction = async (info, tab) => {
   try {
     const { selectionText, menuItemId, editable } = info;
-    console.log(selectionText, menuItemId, editable);
 
     const baseCompletion = await generate(
       `${generateOptions[menuItemId]} the following text: \n ${selectionText}`
     );
-    console.log(baseCompletion);
-    sendMessage(baseCompletion);
+
+    sendMessage(baseCompletion.message.content, tab.id);
   } catch (error) {
-    sendMessage(error.toString());
+    sendMessage(error.toString(), tab.id);
   }
 };
 
-const sendMessage = (content) => {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const activeTab = tabs[0].id;
-    chrome.tabs.executeScript(activeTab, _, () => alert('dsdas'));
-  });
+const sendMessage = (content, activeTab) => {
+  chrome.tabs.sendMessage(activeTab, { content });
 };
 
 chrome.contextMenus.onClicked.addListener(generateCompletionAction);
