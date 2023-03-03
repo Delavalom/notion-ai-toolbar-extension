@@ -29,6 +29,6 @@ z-index: 50;
   const dialog = document.querySelector("dialog");
   dialog.showModal();
   dialog.querySelector("button").addEventListener("click", () => {
-    dialog.close();
+    dialog.remove();
   });
 }
