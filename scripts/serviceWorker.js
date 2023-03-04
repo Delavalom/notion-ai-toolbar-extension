@@ -5,7 +5,7 @@ const generateOptions = {
   makeLonger: "Make longer",
   simplifyLanguage: "Simplify language",
   summarize: "Summarize",
-  explainThis: "Explain this",
+  explainThis: "Explain this to me as if I were 17 years old",
   findTodosOn: "Find todos on",
   continueWriting: "Continue Writing",
 };
